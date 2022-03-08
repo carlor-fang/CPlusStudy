@@ -1,0 +1,15 @@
+.vs
+.svn
+.idea
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+*.vcxproj.user
+
+x64/*
+ConsoleApplication2/x64/*
