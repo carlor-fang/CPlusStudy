@@ -98,21 +98,21 @@ void testRingBuffer()
 
     for (int ii = 0; ii < 1000; ii++)
     {
-        std::cout << "start";
-        std::cout << ii << std::endl;
+        //std::cout << "start";
+        //std::cout << ii << std::endl;
         int pushCount = rand() % 10;
         for (int jj = 0; jj < pushCount; jj++) {
             buffer->push(data);    // 要支持自动扩容
         }
-        buffer->print();
+        //buffer->print();
         char out[128] = { 0 };
         int popCount = rand() % 10;
         for (int jj = 0; jj < popCount; jj++) {
             buffer->pop(&out[0], sizeof(out));   // 要支持自动缩容
         }
-        std::cout << "pop:";
-        std::cout << popCount << std::endl;
-        buffer->print();
+        /*std::cout << "pop:";
+        std::cout << popCount << std::endl;*/
+        //buffer->print();
     }
 }
 
