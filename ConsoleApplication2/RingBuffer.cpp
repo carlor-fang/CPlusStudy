@@ -29,9 +29,6 @@ void RingBuffer::initBufferSize(int size)
 
 void RingBuffer::resetBufferSize(int size)
 {
-    int mh = head - memAddr;
-    int mt = tail - memAddr;
-
     char* p = (char*)realloc(memAddr, sizeof(char) * (size));
     if (p) {
         bufferSize = size;

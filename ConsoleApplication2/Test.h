@@ -27,3 +27,5 @@ void testCustomList();
 void testRingBuffer();
 
 void testStackInfo();
+
+void testOctree();

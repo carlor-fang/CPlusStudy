@@ -13,7 +13,7 @@ CustomString::CustomString(const char* value)
         return;
     }
 
-    int length = strlen(value);
+    size_t length = strlen(value);
     p = (char*)malloc(sizeof(char) * (length + 1));
     if (p) {
         memcpy(p, value, sizeof(char) * length);
@@ -30,7 +30,7 @@ CustomString::CustomString(const char* value, int startIndex, int count)
     if (startIndex < 0) {
         startIndex = 0;
     }
-    int length = strlen(value);
+    size_t length = strlen(value);
     if (startIndex + count > length) {
         count = length - startIndex;
     }
@@ -69,7 +69,7 @@ void CustomString::operator=(const char* value) {
         return;
     }
 
-    int newLen = strlen(value);
+    size_t newLen = strlen(value);
     char* newMem = (char*)realloc(p, sizeof(char) * (newLen + 1));
     if (newMem) {
         p = newMem;
@@ -121,7 +121,7 @@ void CustomString::append(const char* value)
         return;
     }
     int oldLen = len();
-    int addLen = strlen(value);
+    size_t addLen = strlen(value);
     char* newMem = (char*)realloc(p, sizeof(char) * (oldLen + addLen + 1));
     if (newMem) {
         p = newMem;

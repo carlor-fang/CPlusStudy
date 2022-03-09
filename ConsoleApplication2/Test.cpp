@@ -6,6 +6,8 @@
 #include "CustomList.cpp"
 #include "RingBuffer.h"
 #include "CustomStack.h"
+#include <vector>
+#include "Octree.h"
 
 
 // 实现string以下api，内部不能使用string，只能用数组存字符
@@ -162,4 +164,106 @@ void testStackInfo()
     int ret = 0;
     stack.pop(ret);
     std::cout << "testWithStack ret " << ret << std::endl;
+}
+
+
+
+/*
+* octree test
+*/
+std::vector<Vec3> points;
+Octree* octree;
+OctreePoint* octreePoints;
+Vec3 qmin, qmax;
+
+float rand11() // Random number between [-1,1]
+{
+    return -1.f + (2.f * rand()) * (1.f / RAND_MAX);
+}
+
+Vec3 randVec3() // Random vector with components in the range [-1,1]
+{
+    return Vec3(rand11(), rand11(), rand11());
+}
+
+// Determine if 'point' is within the bounding box [bmin, bmax]
+bool naivePointInBox(const Vec3& point, const Vec3& bmin, const Vec3& bmax) {
+    return
+        point.x >= bmin.x &&
+        point.y >= bmin.y &&
+        point.z >= bmin.z &&
+        point.x <= bmax.x &&
+        point.y <= bmax.y &&
+        point.z <= bmax.z;
+}
+
+#include <windows.h>
+double stopwatch()
+{
+    unsigned long long ticks;
+    unsigned long long ticks_per_sec;
+    QueryPerformanceFrequency((LARGE_INTEGER*)&ticks_per_sec);
+    QueryPerformanceCounter((LARGE_INTEGER*)&ticks);
+    return ((float)ticks) / (float)ticks_per_sec;
+}
+
+// Query using Octree
+void testOctree() {
+
+    /*
+    * init
+    */ 
+    octree = new Octree(Vec3(0, 0, 0), Vec3(1, 1, 1));
+
+    // Create a bunch of random points
+    const int nPoints = 1 * 1000 * 1000;
+    for (int i = 0; i < nPoints; ++i) {
+        points.push_back(randVec3());
+    }
+    printf("Created %ld points\n", points.size()); fflush(stdout);
+
+    // Insert the points into the octree
+    octreePoints = new OctreePoint[nPoints];
+    for (int i = 0; i < nPoints; ++i) {
+        octreePoints[i].setPosition(points[i]);
+        //std::cout << points[i].x;
+        //std::cout << ",";
+        //std::cout << points[i].y;
+        //std::cout << ",";
+        //std::cout << points[i].z << std::endl;
+        octree->insert(octreePoints[i]);
+    }
+    printf("Inserted points to octree\n"); fflush(stdout);
+
+    // Create a very small query box. The smaller this box is
+    // the less work the octree will need to do. This may seem
+    // like it is exagerating the benefits, but often, we only
+    // need to know very nearby objects.
+    qmin = Vec3(-.05, -.05, -.05);
+    qmax = Vec3(.05, .05, .05);
+
+    // Remember: In the case where the query is relatively close
+    // to the size of the whole octree space, the octree will
+    // actually be a good bit slower than brute forcing every point!
+
+
+
+
+    double start1 = stopwatch();
+    std::vector<int> results;
+    for (int i = 0; i < points.size(); ++i) {
+        if (naivePointInBox(points[i], qmin, qmax)) {
+            results.push_back(i);
+        }
+    }
+    double T1 = stopwatch() - start1;
+    printf("testNaive found %ld points in %.5f sec.\n", results.size(), T1);
+
+
+    // 
+    double start2 = stopwatch();
+    std::vector<OctreePoint*> results2;
+    octree->getPointsInsideBox(qmin, qmax, results2);
+    double T2 = stopwatch() - start2;
+    printf("testOctree found %ld points in %.5f sec.\n", results.size(), T2);
 }
