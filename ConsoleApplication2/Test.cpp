@@ -8,7 +8,7 @@
 #include "CustomStack.h"
 #include <vector>
 #include "Octree.h"
-
+#include "SkipList.h"
 
 // 实现string以下api，内部不能使用string，只能用数组存字符
 void testCustomString()
@@ -266,4 +266,35 @@ void testOctree() {
     octree->getPointsInsideBox(qmin, qmax, results2);
     double T2 = stopwatch() - start2;
     printf("testOctree found %ld points in %.5f sec.\n", results.size(), T2);
+}
+
+void testSkipList()
+{
+    //输入
+    //    ["Skiplist", "add", "add", "add", "search", "add", "search", "erase", "erase", "search"]
+    //[[], [1], [2], [3], [0], [4], [1], [0], [1], [1]]
+    //输出
+    //    [null, null, null, null, false, null, true, false, true, false]
+
+    int count = 100;
+    std::vector<int> test;
+    SkipList skiplist = SkipList();
+    for (int i = 0; i < count; i++) {
+        int value = rand() % count;
+        skiplist.add(value);
+        test.push_back(value);
+        std::cout << "add:";
+        std::cout << value << std::endl;;
+
+    }
+
+    for (int i = test.size() - 1; i >= 0; i--)
+    {
+        bool finded = skiplist.erase(test[i]);
+        std::cout << "find:";
+        std::cout << finded << std::endl;
+    }
+
+
+    std::cout << "ddd";
 }

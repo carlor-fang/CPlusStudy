@@ -18,8 +18,8 @@ int main()
     //testCustomList();
     //testRingBuffer();
     //testStackInfo();
-    testOctree();
-
+    //testOctree();
+    testSkipList();
 
     return 0;
 }

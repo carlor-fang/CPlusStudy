@@ -146,6 +146,7 @@
     <ClCompile Include="CustomString.cpp" />
     <ClCompile Include="Octree.cpp" />
     <ClCompile Include="RingBuffer.cpp" />
+    <ClCompile Include="SkipList.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="CustomString.h" />
     <ClInclude Include="Octree.h" />
     <ClInclude Include="RingBuffer.h" />
+    <ClInclude Include="SkipList.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

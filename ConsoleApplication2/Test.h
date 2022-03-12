@@ -29,3 +29,5 @@ void testRingBuffer();
 void testStackInfo();
 
 void testOctree();
+
+void testSkipList();
