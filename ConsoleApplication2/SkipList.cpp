@@ -13,7 +13,22 @@ SkipList::SkipList()
 
 SkipList::~SkipList()
 {
+    std::vector<SkipNode*> headList;
+    SkipNode* node = head;
+    while (node) {
+        headList.push_back(node);
+        node = node->index;
+    }
+    for (int i = headList.size() - 1; i >= 0; i--) {
+        node = headList[i];
+        while (node) {
+            auto next = node->next;
+            delete node;
+            node = next;
+        }
+    }
 
+    headList.clear();
 }
 
 bool SkipList::isHeadNode(const SkipNode& node)
