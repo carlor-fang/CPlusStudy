@@ -5,7 +5,7 @@
 //当一个数据元素被用掉后，其余数据元素不需要移动其存储位置。
 //自动扩容，空余大于initsize时，自动收缩
 
-const int DEFAULT_BUFFER_SIZE = 256;
+const int DEFAULT_BUFFER_SIZE = 10;
 
 class RingBuffer
 {

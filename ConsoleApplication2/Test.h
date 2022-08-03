@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 
-void testCustomString();
+void TestCustomString();
 
 class TestArray {
 public:
@@ -20,14 +20,24 @@ public:
         return this->a == ta.a && this->b == ta.b;
     }
 };
-void testCustomArray();
+void TestCustomArray();
 
-void testCustomList();
+void TestCustomList();
 
-void testRingBuffer();
+void TestRingBuffer();
 
-void testStackInfo();
+void TestStackInfo();
 
-void testOctree();
+void TestOctree();
 
-void testSkipList();
+void TestSkipList();
+
+void TestJson();
+
+void TestCommander(int argc, char* argv[]);
+
+void TestPosManager();
+
+void TestSocket(int argc, char* argv[]);
+
+void TestBinder();

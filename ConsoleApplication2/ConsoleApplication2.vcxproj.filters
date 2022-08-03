@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ConsoleApplication2.cpp" />
+    <ClCompile Include="CustomArray.cpp" />
+    <ClCompile Include="CustomList.cpp" />
+    <ClCompile Include="CustomStack.cpp" />
+    <ClCompile Include="CustomString.cpp" />
+    <ClCompile Include="Octree.cpp" />
+    <ClCompile Include="RingBuffer.cpp" />
+    <ClCompile Include="SkipList.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="JsonParse.cpp">
+      <Filter>Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonValue.cpp">
+      <Filter>Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Commander</Filter>
+    </ClCompile>
+    <ClCompile Include="PosManager.cpp">
+      <Filter>PosManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Binder.cpp" />
+    <ClCompile Include="ClientSocket.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSocket.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CustomArray.h" />
+    <ClInclude Include="CustomList.h" />
+    <ClInclude Include="CustomStack.h" />
+    <ClInclude Include="CustomString.h" />
+    <ClInclude Include="Octree.h" />
+    <ClInclude Include="RingBuffer.h" />
+    <ClInclude Include="SkipList.h" />
+    <ClInclude Include="Test.h" />
+    <ClInclude Include="JsonExample.h">
+      <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="OffsetTest.h" />
+    <ClInclude Include="JsonParse.h">
+      <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonValue.h">
+      <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Commander</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandTest.hpp">
+      <Filter>Commander</Filter>
+    </ClInclude>
+    <ClInclude Include="PosManager.h">
+      <Filter>PosManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Binder.h" />
+    <ClInclude Include="ClientSocket.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSocket.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Json">
+      <UniqueIdentifier>{e8962e27-2577-4a87-954d-c56e39431fd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commander">
+      <UniqueIdentifier>{6fc84d9c-78db-4f3a-a9f0-3f2ed1107fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PosManager">
+      <UniqueIdentifier>{c82adffe-ccf5-4f27-b368-ef169188d493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{dfa735cb-4dc5-4da7-89ab-fdd92476b7c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

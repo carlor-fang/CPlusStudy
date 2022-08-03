@@ -2,35 +2,96 @@
 //
 
 #include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <cstdio>
-#include <algorithm>
+#include<string>
+#include<math.h>
+#include <set>
 #include "Test.h"
-#include "Octree.h"
 
+using namespace std;
 
-
-int main()
+int main(int argc, char* argv[])
 {
-    //testCustomString();
-    //testCustomArray();
-    //testCustomList();
-    //testRingBuffer();
-    //testStackInfo();
-    //testOctree();
-    testSkipList();
-
-    return 0;
+    TestSocket(argc, argv);
 }
 
-// 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
-// 调试程序: F5 或调试 >“开始调试”菜单
-
-// 入门使用技巧: 
-//   1. 使用解决方案资源管理器窗口添加/管理文件
-//   2. 使用团队资源管理器窗口连接到源代码管理
-//   3. 使用输出窗口查看生成输出和其他消息
-//   4. 使用错误列表窗口查看错误
-//   5. 转到“项目”>“添加新项”以创建新的代码文件，或转到“项目”>“添加现有项”以将现有代码文件添加到项目
-//   6. 将来，若要再次打开此项目，请转到“文件”>“打开”>“项目”并选择 .sln 文件
+////#include <sys/types.h>
+////#include <sys/socket.h>
+////#include <stdio.h>
+//#include <iostream>
+////#include <netinet/in.h>
+////#include <arpa/inet.h>//
+////#include <unistd.h>
+//#include <string.h>
+//#include <stdlib.h>
+////#include <fcntl.h>//
+////#include <sys/shm.h>//
+//#include <thread>
+//#include <winsock2.h>
+//#include<ws2tcpip.h>
+//#define PORT 7000
+//#define QUEUE 20//连接请求队列
+//#pragma comment(lib,"ws2_32.lib")
+//
+//int ConnectId;
+//void thread_task(int SocketId)
+//{
+//    char Buffer[1024];
+//    //std::cout<<sizeof(buffer);
+//    //printf("%s", sizeof(buffer));
+//    while (1) {
+//        memset(Buffer, 0, sizeof(Buffer));
+//        int Len = recv(ConnectId, Buffer, sizeof(Buffer), 0);//从TCP连接的另一端接收数据。
+//
+//        if (strcmp(Buffer, "exit\n") == 0)//如果没有收到TCP另一端发来的数据则跳出循环不输出
+//        {
+//            closesocket(ConnectId);//因为accpet函数连接成功后还会生成一个新的套接字描述符，结束后也需要关闭
+//            closesocket(SocketId);//关闭socket套接字描述符
+//            break;
+//
+//        }
+//        printf("len = %d  rec = %s", Len, Buffer);//如果有收到数据则输出数据
+//        //必须要有返回数据， 这样才算一个完整的请求
+//        send(ConnectId, Buffer, Len, 0);//向TCP连接的另一端发送数据。
+//    }
+//
+//
+//}
+//
+//int main()
+//{
+//    printf("server start waiting connection\n");//如果有收到数据则输出数据
+//    int SockerId = socket(AF_INET, SOCK_STREAM, 0); // 若成功则返回一个sockfd（套接字描述符）
+//    struct sockaddr_in Sockaddr; // 一般是储存地址和端口的。用于信息的显示及存储使用
+//    Sockaddr.sin_family = AF_INET;
+//    Sockaddr.sin_port = htons(PORT); // 将一个无符号短整型数值转换为网络字节序，即大端模式(big-endian)
+//    Sockaddr.sin_addr.s_addr = htonl(INADDR_ANY); // 将主机的无符号长整形数转换成网络字节顺序。
+//
+//    if (bind(SockerId, (struct sockaddr*)&Sockaddr, sizeof(Sockaddr)) == -1)
+//    {
+//        closesocket(SockerId);//关闭socket套接字描述符
+//        printf("bind %d", WSAGetLastError());
+//        exit(1);
+//    }
+//
+//    if (listen(SockerId, QUEUE) == -1)
+//    {
+//        perror("listen");
+//        exit(1);
+//    }
+//
+//    struct sockaddr_in client_addr;
+//    socklen_t length = sizeof(client_addr);
+//
+//    ConnectId = accept(SockerId, (struct sockaddr*)&client_addr, &length); // 成功返回非负描述字，出错返回-1
+//    if (ConnectId < 0)
+//    {
+//        perror("connect");
+//        exit(1);
+//    }
+//
+//    //创建另外一个线程
+//    std::thread Recive(thread_task, SockerId);
+//    Recive.join();
+//
+//    return 0;
+//}

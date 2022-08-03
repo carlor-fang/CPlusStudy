@@ -23,8 +23,11 @@ CustomArray<T>::~CustomArray()
 {
     curNumber = 0;
     maxNumber = 0;
-    delete[]datas;
-    datas = nullptr;
+    if (datas)
+    {
+        delete[]datas;
+        datas = nullptr;
+    }
 }
 
 template<typename T>
@@ -37,7 +40,10 @@ void CustomArray<T>::reserve(int newNumber)
     for (int i = 0; i < curNumber; i++) {
         temp[i] = datas[i];
     }
-    delete[] datas;
+    if (datas)
+    {
+        delete[] datas;
+    }
     datas = temp;
 
     maxNumber = newNumber;

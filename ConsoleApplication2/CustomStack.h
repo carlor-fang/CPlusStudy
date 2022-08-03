@@ -31,7 +31,7 @@ public:
     }
 
     template<typename T>
-    void push(T value)
+    void push(const T& value)
     {
         int size = sizeof(value);
         StackNode* temp = new StackNode(size);
@@ -62,7 +62,8 @@ public:
         }
         auto temp = top->next;
         T* p = (T*)top->data;
-        memcpy(&value, p, top->size);
+        value = *p;
+        //memcpy(&value, p, top->size);
         delete top->data;
         delete top;
         top = temp;

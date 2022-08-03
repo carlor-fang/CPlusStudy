@@ -9,9 +9,15 @@
 #include <vector>
 #include "Octree.h"
 #include "SkipList.h"
+#include "JsonExample.h"
+#include "CommandTest.hpp"
+#include "PosManager.h"
+#include "Binder.h"
+#include "ClientSocket.h"
+#include "ServerSocket.h"
 
 // 实现string以下api，内部不能使用string，只能用数组存字符
-void testCustomString()
+void TestCustomString()
 {
     auto str1 = CustomString("test1fdsdfdd");
     auto str2 = CustomString("test2, test3,fsdfdsad,fdsfdssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
@@ -26,7 +32,7 @@ void testCustomString()
     CustomString* ret = str2.split(",");
 }
 
-void testCustomArray()
+void TestCustomArray()
 {
     auto arr = new CustomArray<int>();
     arr->reserve(4);
@@ -70,7 +76,7 @@ void testCustomArray()
 }
 
 //实现双向链表以下api
-void testCustomList()
+void TestCustomList()
 {
     auto list1 = new CustomList<int>();
     auto node1 = list1->push(1);
@@ -91,27 +97,33 @@ void testCustomList()
     list2->popAll();
 }
 
-void testRingBuffer()
+void TestRingBuffer()
 {
-    int initSize = 256;
-    const char* data = "123456789";
+    int initSize = 10;
+    const char* data = "0123456789";
     auto buffer = new RingBuffer(initSize);
     srand(time(NULL));
 
     for (int ii = 0; ii < 1000; ii++)
     {
-        //std::cout << "start";
         //std::cout << ii << std::endl;
-        int pushCount = rand() % 10;
+        int pushCount = rand() % 10;;
+        std::cout << "push:";
+        std::cout << pushCount * 10;
+        std::cout << "" << std::endl;
         for (int jj = 0; jj < pushCount; jj++) {
             buffer->push(data);    // 要支持自动扩容
         }
         //buffer->print();
-        char out[128] = { 0 };
+        char out[11] = { 0 };
         int popCount = rand() % 10;
+        std::cout << "pop:";
+        std::cout << popCount * 8;
+        std::cout << "" << std::endl;
         for (int jj = 0; jj < popCount; jj++) {
             buffer->pop(&out[0], sizeof(out));   // 要支持自动缩容
         }
+
         /*std::cout << "pop:";
         std::cout << popCount << std::endl;*/
         //buffer->print();
@@ -146,7 +158,7 @@ public:
         stack.push(1);
     }
 };
-void testStackInfo()
+void TestStackInfo()
 {
     TestStack t1;
 
@@ -208,7 +220,7 @@ double stopwatch()
 }
 
 // Query using Octree
-void testOctree() {
+void TestOctree() {
 
     /*
     * init
@@ -268,7 +280,7 @@ void testOctree() {
     printf("testOctree found %ld points in %.5f sec.\n", results.size(), T2);
 }
 
-void testSkipList()
+void TestSkipList()
 {
     //输入
     //    ["Skiplist", "add", "add", "add", "search", "add", "search", "erase", "erase", "search"]
@@ -288,13 +300,84 @@ void testSkipList()
 
     }
 
-    for (int i = test.size() - 1; i >= 0; i--)
-    {
-        bool finded = skiplist.erase(test[i]);
-        std::cout << "find:";
-        std::cout << finded << std::endl;
-    }
+    //for (int i = test.size() - 1; i >= 0; i--)
+    //{
+    //    bool finded = skiplist.erase(test[i]);
+    //    std::cout << "find:";
+    //    std::cout << finded << std::endl;
+    //}
 
 
     std::cout << "ddd";
+}
+
+void TestJson()
+{
+    example1();
+    example2();
+    example3();
+    example4();
+}
+
+void TestCommander(int argc, char* argv[])
+{
+    CommandTest(argc, argv);
+}
+
+void TestPosManager()
+{
+    auto m = new PosManager();
+    int blockSize = 100;
+    int mapSize = 10000;
+    m->Init(blockSize, mapSize);
+
+    int poseId1 = 1;
+    int poseId2 = 2;
+    m->Add(poseId1, 100, 200);  // 100是横坐标，200纵坐标
+    m->Add(poseId2, 200, 300);
+    m->Add(3, 0, 110);
+    m->Add(4, 0, 210);
+    m->Add(5, 0, 300);
+    m->Add(6, 100, 300);
+    std::vector<int> Ids;
+    m->Find(poseId1, Ids);    // 找到poseid1脚下以及周围8格的所有id
+    m->Update(poseId1, 300, 400);
+    m->Find(poseId1, Ids);    // 找到poseid1脚下以及周围8格的所有id
+    m->Remove(poseId2);
+    m->Find(poseId1, Ids);
+    delete m;
+}
+
+void TestSocket(int argc, char* argv[])
+{
+    if (argc > 1)
+    {
+        client();
+    }
+    else
+    {
+        server();
+    }
+}
+
+
+
+void TestBinder()
+{
+    Binder<TestClassA> binder;
+    binder.BindVar("p1", offsetof(TestClassA, p1));
+    binder.BindVar("p2", offsetof(TestClassA, p2));
+    binder.BindVar("p3", offsetof(TestClassA, p3));
+
+    binder.BindFunc("Test1", &TestClassA::Test1);
+    binder.BindStaticFunc("Test2", TestClassA::Test2);
+    TestClassA t1;
+    int* p1 = binder.FindVar<int>(&t1, "p1");
+    bool* p2 = binder.FindVar<bool>(&t1, "p2");
+    string* p3 = binder.FindVar<string>(&t1, "p3");
+    std::cout << *p1 << std::endl;
+    std::cout << *p2 << std::endl;
+    std::cout << *p3 << std::endl;
+    binder.CallFunc(&t1, "Test1", nullptr);
+    binder.CallStaticFunc("Test2", nullptr);
 }
