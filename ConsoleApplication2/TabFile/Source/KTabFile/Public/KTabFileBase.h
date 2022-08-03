@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 
-
 template<typename TabFileClass>
 class FKTabFileSingleton
 {
@@ -20,7 +19,15 @@ template<typename TabFileClass, typename TabDataKeyType, typename TabData>
 class FKTabFileBase : public FKTabFileSingleton<TabFileClass>
 {
 public:
-    virtual ~FKTabFileBase() {}
+    FKTabFileBase() {}
+    virtual ~FKTabFileBase() 
+    {
+        for (auto Iterator = Datas.CreateIterator(); Iterator; ++Iterator)
+        {
+            delete Iterator->Value;
+        }
+        Datas.Empty();
+    }
 
     virtual bool Load(const FString& Name)
     {
@@ -46,13 +53,10 @@ public:
                 {
                     TArray<FString> ColumnDatas;
                     LineString.ParseIntoArray(ColumnDatas, TEXT("\t"));
-                    if (ColumnDatas.Num() == Columns.Num())
-                    {
-                        TabData Data;
-                        Data.RegisterParams();
-                        Data.Load(Columns, ColumnDatas);
-                        Datas.Add(Data.GetKey(), Data);
-                    }
+                    TabData* Data = new TabData();
+                    Data->RegisterParams();
+                    Data->Load(Columns, ColumnDatas);
+                    Datas.Emplace(Data->GetKey(), Data);
                 }
             }
         });
@@ -60,5 +64,5 @@ public:
     }
 protected:
     bool IsLoaded;
-    TMap<TabDataKeyType, TabData> Datas;
+    TMap<TabDataKeyType, TabData*> Datas;
 };
