@@ -43,7 +43,7 @@ public:
         FieldData.FieldType = EFieldType::EF_STRING;
     }
 
-    void Load(const TArray<FString> ColumnNames, const TArray<FString> ColumnDatas)
+    void Load(const TArray<FString>& ColumnNames, const TArray<FString>& ColumnDatas)
     {
         for (int32 i = 0; i < ColumnNames.Num(); i++)
         {
