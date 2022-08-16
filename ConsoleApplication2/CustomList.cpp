@@ -2,8 +2,8 @@
 
 template<typename T>
 CustomNode<T>::CustomNode(const T& newData)
+    : data(newData)
 {
-    data = new T(newData);
 }
 
 template<typename T>
@@ -11,7 +11,6 @@ CustomNode<T>::~CustomNode()
 {
     prior = nullptr;
     next = nullptr;
-    delete data;
 }
 
 template<typename T>
@@ -56,9 +55,8 @@ template<typename T>
 CustomNode<T>* CustomList<T>::find(const T& value)
 {
     auto node = tail;
-    auto target = value;
     while (node) {
-        if (*node->data == target){
+        if (node->data == value){
             return node;
         }
         node = node->prior;

@@ -29,32 +29,58 @@ void RingBuffer::initBufferSize(int size)
 
 void RingBuffer::resetBufferSize(int size)
 {
-    if (usedSize > 0)
+    char* p;
+    if (usedSize > 0) 
     {
-        if (tail < head)
+        p = (char*)malloc(sizeof(char) * (size));
+        assert(p);
+        if (tail > head)
         {
-            char* p = (char*)malloc(sizeof(char) * (tail - memAddr));
-            assert(p);
-            memcpy(p, memAddr, (tail - memAddr));
-            memmove(memAddr, head, memAddr + bufferSize - head);
-            memmove(memAddr + (memAddr + bufferSize - head), p, (tail - memAddr));
-            head = memAddr;
-            tail = memAddr + usedSize;
-            delete p;
-            p = nullptr;
+            memcpy(p, head, tail - head);
         }
         else
         {
-            memmove(memAddr, head, usedSize);
+            memcpy(p, head, memAddr + bufferSize - head);
+            memcpy(p + (memAddr + bufferSize - head), memAddr, tail - memAddr);
         }
+        free(memAddr);
     }
-    char* p = (char*)realloc(memAddr, sizeof(char) * (size));
-    assert(p);
+    else
+    {
+        p = (char*)realloc(memAddr, sizeof(char) * (size));
+        assert(p);
+    }
     bufferSize = size;
     memAddr = p;
-
     head = memAddr;
     tail = memAddr + usedSize;
+
+    //if (usedSize > 0)
+    //{
+    //    if (tail < head)
+    //    {
+    //        char* p = (char*)malloc(sizeof(char) * (tail - memAddr));
+    //        assert(p);
+    //        memcpy(p, memAddr, (tail - memAddr));
+    //        memmove(memAddr, head, memAddr + bufferSize - head);
+    //        memmove(memAddr + (memAddr + bufferSize - head), p, (tail - memAddr));
+    //        head = memAddr;
+    //        tail = memAddr + usedSize;
+    //        delete p;
+    //        p = nullptr;
+    //    }
+    //    else
+    //    {
+    //        memmove(memAddr, head, usedSize);
+    //    }
+    //}
+    //char* p = (char*)realloc(memAddr, sizeof(char) * (size));
+    //assert(p);
+    //bufferSize = size;
+    //memAddr = p;
+
+    //head = memAddr;
+    //tail = memAddr + usedSize;
 }
 
 void RingBuffer::push(const char* value)
@@ -80,6 +106,7 @@ void RingBuffer::push(const char* value)
         memcpy(tail, temp, lastSize);
         tail = memAddr + lastSize;
     }
+    print();
 }
 
 void RingBuffer::pop(char* outValue, int size)
@@ -110,6 +137,7 @@ void RingBuffer::pop(char* outValue, int size)
     {
         resetBufferSize(usedSize + DEFAULT_BUFFER_SIZE);
     }
+    print();
 }
 
 void RingBuffer::print()

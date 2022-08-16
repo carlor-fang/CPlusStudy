@@ -8,7 +8,7 @@ struct CustomNode
 public:
     CustomNode* prior = nullptr;
     CustomNode* next = nullptr;
-    T* data;
+    T data;
 
     CustomNode() = default;
     CustomNode(const T& newData);
